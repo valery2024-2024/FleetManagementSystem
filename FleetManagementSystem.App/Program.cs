@@ -1,17 +1,19 @@
 ﻿using FleetManagementSystem.Domain.Entities;
 
-var cargo1 = new Cargo(1, "Box", 100, "Standard");
-var cargo2 = new Cargo(2, "Wood", 200, "Heavy");
+Vehicle normalTruck = new Truck(1, "Volvo", 5000, 25, true);
+Vehicle oldTruckAsVehicle = new OldTruck(2, "MAN", 4000, 22);
 
-// оператор +
-var totalCargo = cargo1 + cargo2;
-Console.WriteLine($"Total weight: {totalCargo.Weight}");
+OldTruck oldTruckAsOldTruck = new OldTruck(3, "DAF", 3500, 20);
 
-// оператор ==
-Console.WriteLine(cargo1 == cargo2);
+Console.WriteLine("override");
+Console.WriteLine(normalTruck.GetVehicleType());
 
-// індексатор
-var fleet = new Fleet();
-fleet.AddVehicle(new Truck(1, "Volvo", 1000, 20, true));
+Console.WriteLine();
 
-Console.WriteLine(fleet[0].Brand);
+Console.WriteLine("new через Vehicle");
+Console.WriteLine(oldTruckAsVehicle.GetVehicleType());
+
+Console.WriteLine();
+
+Console.WriteLine("new через OldTruck");
+Console.WriteLine(oldTruckAsOldTruck.GetVehicleType());
