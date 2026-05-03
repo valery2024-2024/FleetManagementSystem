@@ -111,3 +111,25 @@ RetryHelper.Retry(() =>
 
     Console.WriteLine("Успіх!");
 });
+Console.WriteLine("\n_ _ _  PRACTICE 11 (Observer) _ _ _");
+
+var notifier = new OrderNotifier();
+var orderLogger = new OrderLogger();
+
+// підписка
+notifier.OrderCreated += orderLogger.OnOrderCreated;
+
+// створення замовлення
+var route2 = new Route(2, "Київ", "Львів", 300);
+var driver2 = new Driver(2, "Petro", "C", 3);
+var cargo2 = new Cargo(2, "Wood", 200, "Heavy");
+
+var order2 = new DeliveryOrder(2, vehicle, driver2, cargo2, route2);
+
+service.CalculateOrderPrice(order2);
+
+// виклик події
+notifier.Notify(order2);
+
+// відписка (ВАЖЛИВО)
+notifier.OrderCreated -= orderLogger.OnOrderCreated;

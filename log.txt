@@ -5,3 +5,4 @@ Test log
 Test log
 Програма запущена
 Test log
+Test log
