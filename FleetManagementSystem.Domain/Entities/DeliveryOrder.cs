@@ -1,4 +1,5 @@
 namespace FleetManagementSystem.Domain.Entities;
+using FleetManagementSystem.Domain.Interfaces;
 public class DeliveryOrder
 {
     public int Id { get; private set; }
@@ -22,8 +23,9 @@ public class DeliveryOrder
         Id = id;
     }
 
-    public void CalculatePrice()
+    public void CalculatePrice(IDeliveryCostCalculator calculator)
     {
-        Price = Route.DistanceKm * 10;
+        if (calculator == null)throw new ArgumentNullException(nameof(calculator));
+        Price = calculator.CalculateCost(Vehicle, Route);
     }
 }
