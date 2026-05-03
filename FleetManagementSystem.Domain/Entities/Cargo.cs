@@ -1,9 +1,13 @@
 namespace FleetManagementSystem.Domain.Entities;
 
-public class Cargo
+public class Cargo : ICargoComponent
 {
     private string _name = string.Empty;
     private double _weight;
+    public double GetWeight()
+    {
+        return Weight;
+    }
 
     public int Id { get; private set; }
 
@@ -18,6 +22,8 @@ public class Cargo
             _name = value;
         }
     }
+
+    
 
     public double Weight
     {

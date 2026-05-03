@@ -133,3 +133,44 @@ notifier.Notify(order2);
 
 // відписка (ВАЖЛИВО)
 notifier.OrderCreated -= orderLogger.OnOrderCreated;
+
+Console.WriteLine("\n_ _ _ PRACTICE 12 _ _ _");
+
+// DECORATOR
+var baseCalc = DeliveryCalculatorFactory.Create("standard");
+var insuranceCalc = new InsuranceDecorator(baseCalc);
+
+var serviceWithInsurance = new DeliveryService(insuranceCalc);
+
+var route3 = new Route(3, "Рівне", "Київ", 370);
+var driver3 = new Driver(3, "Oleh", "C", 4);
+var cargo3 = new Cargo(3, "Glass", 100, "Fragile");
+
+var order3 = new DeliveryOrder(3, vehicle, driver3, cargo3, route3);
+
+serviceWithInsurance.CalculateOrderPrice(order3);
+Console.WriteLine($"Ціна зі страховкою: {order3.Price}");
+
+
+// FACADE
+var facade = new DeliveryFacade();
+
+var order4 = facade.CreateAndCalculate(
+    4,
+    "truck",
+    "express",
+    driver3,
+    cargo3,
+    route3
+);
+
+Console.WriteLine($"Facade ціна: {order4.Price}");
+
+
+// COMPOSITE
+var group = new CargoGroup();
+
+group.Add(new Cargo(10, "Box", 100, "Standard"));
+group.Add(new Cargo(11, "Metal", 200, "Heavy"));
+
+Console.WriteLine($"Загальна вага групи: {group.GetWeight()}");
