@@ -2,6 +2,14 @@
 using FleetManagementSystem.Domain.Repositories;
 using FleetManagementSystem.Domain.Utils;
 using FleetManagementSystem.Domain.Exceptions;
+using FleetManagementSystem.Domain.Interfaces;
+using FleetManagementSystem.Domain.Services;
+
+ILogger logger = new ConsoleLogger();
+logger.Log("Система запущена");
+
+var calculator = new StandardDeliveryCalculator();
+var service = new DeliveryService(calculator);
 
 // Repository
 var cargoRepo = new Repository<Cargo>();
@@ -49,7 +57,10 @@ try
     var cargo = new Cargo(1, "Metal", 500, "Heavy");
 
     var order = new DeliveryOrder(1, truck, driver, cargo, route);
+    
+    service.CalculateOrderPrice(order);
 }
+
 catch (InvalidRouteException ex)
 {
     Console.WriteLine($"Route error: {ex.Message}");
@@ -71,6 +82,7 @@ using (var writer = new StreamWriter("log.txt", true))
 {
     writer.WriteLine("Test log");
 }
+
 
 int attempt = 0;
 
