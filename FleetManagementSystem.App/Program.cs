@@ -1,20 +1,33 @@
 ﻿using FleetManagementSystem.Domain.Entities;
-using FleetManagementSystem.Domain.Services;
-using FleetManagementSystem.Domain.Interfaces;
+using FleetManagementSystem.Domain.Repositories;
+using FleetManagementSystem.Domain.Utils;
 
-var route = new Route(1, "Рівне", "Львів", 200);
-var truck = new Truck(1, "Volvo", 5000, 25, true);
-var driver = new Driver(1, "Ivan", "C", 5);
-var cargo = new Cargo(1, "Wood", 300, "Heavy");
+// 🔹 Repository
+var cargoRepo = new Repository<Cargo>();
 
-var order = new DeliveryOrder(1, truck, driver, cargo, route);
+cargoRepo.Add(new Cargo(1, "Box", 100, "Standard"));
+cargoRepo.Add(new Cargo(2, "Wood", 200, "Heavy"));
 
-// 🔥 різні реалізації
-IDeliveryCostCalculator standard = new StandardDeliveryCalculator();
-IDeliveryCostCalculator express = new ExpressDeliveryCalculator();
+var cargos = cargoRepo.GetAll();
 
-order.CalculatePrice(standard);
-Console.WriteLine($"Standard: {order.Price}");
+// ForEach - для кожного
+Console.WriteLine("ForEach:");
+FunctionalHelper.ForEach(cargos, c =>
+{
+    Console.WriteLine($"{c.Name} - {c.Weight}");
+});
 
-order.CalculatePrice(express);
-Console.WriteLine($"Express: {order.Price}");
+// Map - карта
+Console.WriteLine("\nMap:");
+var weights = FunctionalHelper.Map(cargos, c => c.Weight);
+
+foreach (var w in weights)
+{
+    Console.WriteLine(w);
+}
+
+// Reduce - зменшити
+Console.WriteLine("\nReduce:");
+var totalWeight = FunctionalHelper.Reduce(cargos, 0.0, (sum, c) => sum + c.Weight);
+
+Console.WriteLine($"Total weight: {totalWeight}");
