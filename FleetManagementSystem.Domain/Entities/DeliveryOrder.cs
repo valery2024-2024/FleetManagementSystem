@@ -1,5 +1,6 @@
 namespace FleetManagementSystem.Domain.Entities;
 using FleetManagementSystem.Domain.Interfaces;
+using FleetManagementSystem.Domain.Exceptions;
 public class DeliveryOrder
 {
     public int Id { get; private set; }
@@ -18,7 +19,10 @@ public class DeliveryOrder
         Route = route ?? throw new ArgumentNullException(nameof(route));
 
         if (!vehicle.CanCarry(cargo))
-            throw new Exception("Транспорт не може перевезти цей вантаж");
+            throw new OverweightException("Транспорт не може перевезти цей вантаж");
+
+        if (route.DistanceKm <= 0)
+            throw new InvalidRouteException("Некоректний маршрут");    
 
         Id = id;
     }
