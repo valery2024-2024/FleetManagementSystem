@@ -5,6 +5,8 @@ using FleetManagementSystem.Domain.Exceptions;
 using FleetManagementSystem.Domain.Interfaces;
 using FleetManagementSystem.Domain.Services;
 using FleetManagementSystem.Domain.Factories;
+using FleetManagementSystem.Domain.DTO;
+using System.Text.Json;
 
 var logger = AppLogger.Instance;
 logger.Log("Система запущена");
@@ -174,3 +176,38 @@ group.Add(new Cargo(10, "Box", 100, "Standard"));
 group.Add(new Cargo(11, "Metal", 200, "Heavy"));
 
 Console.WriteLine($"Загальна вага групи: {group.GetWeight()}");
+
+Console.WriteLine("\n_ _ _ PRACTICE 13 (JSON) _ _ _");
+
+// створюємо об'єкт
+var routeJson = new Route(10, "Рівне", "Київ", 300);
+var driverJson = new Driver(10, "Ivan", "C", 5);
+var cargoJson = new Cargo(10, "Box", 100, "Standard");
+
+var orderJson = new DeliveryOrder(10, vehicle, driverJson, cargoJson, routeJson);
+
+service.CalculateOrderPrice(orderJson);
+
+// конвертація в DTO
+var dto = DtoMapper.ToDto(orderJson);
+
+// серіалізація
+var json = JsonSerializer.Serialize(dto, new JsonSerializerOptions
+{
+    WriteIndented = true,
+    Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+});
+
+// запис у файл
+File.WriteAllText("order.json", json);
+
+Console.WriteLine("JSON записано в файл!");
+
+// читання з файлу
+var jsonFromFile = File.ReadAllText("order.json");
+
+// десеріалізація
+var loadedDto = JsonSerializer.Deserialize<DeliveryOrderDto>(jsonFromFile);
+
+Console.WriteLine("\nЗчитано з JSON:");
+Console.WriteLine($"{loadedDto.VehicleBrand} | {loadedDto.CargoName} | {loadedDto.Price}");

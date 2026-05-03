@@ -12,7 +12,7 @@ public class Route
     public double DistanceKm
     {
         get => _distanceKm;
-        set
+        private set
         {
             if (value <= 0)
                 throw new ArgumentException("Дистанція повинна бути більше 0");
@@ -23,8 +23,14 @@ public class Route
 
     public Route(int id, string startPoint, string endPoint, double distanceKm)
     {
-        if (string.IsNullOrWhiteSpace(startPoint) || string.IsNullOrWhiteSpace(endPoint))
-            throw new ArgumentException("Маршрут не може бути пустим");
+        if (string.IsNullOrWhiteSpace(startPoint))
+            throw new ArgumentException("Початкова точка не може бути пустою");
+
+        if (string.IsNullOrWhiteSpace(endPoint))
+            throw new ArgumentException("Кінцева точка не може бути пустою");
+
+        if (startPoint == endPoint)
+            throw new ArgumentException("Початкова і кінцева точка не можуть співпадати");
 
         Id = id;
         StartPoint = startPoint;

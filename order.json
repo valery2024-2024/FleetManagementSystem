@@ -1,0 +1,11 @@
+{
+  "Id": 10,
+  "VehicleBrand": "Volvo",
+  "DriverName": "Ivan",
+  "CargoName": "Box",
+  "CargoWeight": 100,
+  "From": "Рівне",
+  "To": "Київ",
+  "Distance": 300,
+  "Price": 11250
+}
