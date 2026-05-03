@@ -35,3 +35,7 @@ Console.WriteLine($"Total weight: {totalWeight}");
 CollectionDemo.Run();
 
 PerformanceTest.Run();
+
+LinqDemo.Run();
+
+LinqAdvanced.Run();
