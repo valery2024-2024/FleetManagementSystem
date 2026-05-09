@@ -8,6 +8,7 @@ public static class VehicleFactory
     {
         return type.ToLower() switch
         {
+            "moto" => new Moto(3, "Viper", 50, 3, false),
             "truck" => new Truck(1, "Volvo", 5000, 25, true),
             "car" => new Car(2, "Toyota", 500, 8, 5),
             _ => throw new ArgumentException("Невідомий тип транспорту")

@@ -23,7 +23,7 @@ public class Cargo : ICargoComponent
         }
     }
 
-    
+
 
     public double Weight
     {

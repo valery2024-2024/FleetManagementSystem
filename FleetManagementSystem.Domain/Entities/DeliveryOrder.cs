@@ -1,4 +1,5 @@
 namespace FleetManagementSystem.Domain.Entities;
+
 using FleetManagementSystem.Domain.Interfaces;
 using FleetManagementSystem.Domain.Exceptions;
 public class DeliveryOrder
@@ -22,14 +23,14 @@ public class DeliveryOrder
             throw new OverweightException("Транспорт не може перевезти цей вантаж");
 
         if (route.DistanceKm <= 0)
-            throw new InvalidRouteException("Некоректний маршрут");    
+            throw new InvalidRouteException("Некоректний маршрут");
 
         Id = id;
     }
 
     public void CalculatePrice(IDeliveryCostCalculator calculator)
     {
-        if (calculator == null)throw new ArgumentNullException(nameof(calculator));
+        if (calculator == null) throw new ArgumentNullException(nameof(calculator));
         Price = calculator.CalculateCost(Vehicle, Route);
     }
 }
