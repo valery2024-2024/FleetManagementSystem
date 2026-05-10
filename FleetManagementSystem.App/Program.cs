@@ -118,6 +118,17 @@ if (selectedVehicle == null)
     return;
 }
 
+try
+{
+    var order = new DeliveryOrder(1, selectedVehicle, driver, cargo, route);
+    Console.WriteLine("= = = Замовлення успішно створено = = =");
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Помилка: {ex.Message}");
+    return;
+}
+
 // Розрахунок ціни
 double cost = selectedVehicle.CalculateDeliveryCost(route);
 
@@ -142,7 +153,7 @@ Console.WriteLine($"Ціна доставки: {cost}");
 // JSON
 Console.WriteLine("\n===== ЗБЕРЕЖЕННЯ В JSON =====");
 
-var order = new
+var orderJson = new
 {
     From = from,
     To = to,
@@ -152,7 +163,7 @@ var order = new
     Cost = cost
 };
 
-string json = JsonSerializer.Serialize(order, new JsonSerializerOptions 
+string json = JsonSerializer.Serialize(orderJson, new JsonSerializerOptions 
 { 
     WriteIndented = true, 
     Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
